@@ -1,47 +1,48 @@
-<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-primary">
   <div class="container">
-    <a class="navbar-brand" href="#">Dating App</a>
-    <button
-      class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse"
-      aria-expanded="false" aria-label="Toggle navigation">
+    <a class="navbar-brand" routerLink="/" routerLinkActive="active">Dating App</a>
+
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
 
       <div>
+        <ul class="navbar-nav me-auto mb-2 mb-md-0">
           @if(accountService.signal_CurrentUser()) {
-            <ul class="navbar-nav me-auto mb-2 mb-md-0">
-              <li class="nav-item">
-                <a class="nav-link" href="#">Matches</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#">Lists</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#">Messages</a>
-              </li>
-            </ul>
-        }
+          <li class="nav-item">
+            <a routerLink="/members" routerLinkActive="active" class="nav-link" href="#">Matches</a>
+          </li>
+          <li class="nav-item">
+            <a routerLink="/lists" routerLinkActive="active" class="nav-link" href="#">Lists</a>
+          </li>
+          <li class="nav-item">
+            <a routerLink="/messages" routerLinkActive="active" class="nav-link" href="#">Messages</a>
+          </li>
+          }
+        </ul>
       </div>
-      
+
       <div class="mt-3 my-md-0">
         @if(accountService.signal_CurrentUser()) {
-          <div dropdown class="dropdown">
-            <a dropdownToggle class="dropdown-toggle text-light text-decoration-none">Welcome user</a>
-            <div *dropdownMenu class="dropdown-menu">
-              <a class="dropdown-item">Edit profile</a>
-              <div class="dropdown-divider"></div>
-              <a class="dropdown-item" (click)="logout()">Logout</a>
-            </div>
+        <div dropdown class="dropdown">
+          <a dropdownToggle class="dropdown-toggle text-light text-decoration-none">
+            Welcome {{accountService.signal_CurrentUser()?.username | titlecase}}
+          </a>
+          <div *dropdownMenu class="dropdown-menu">
+            <a class="dropdown-item">Edit profile</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" (click)="logout()">Logout</a>
           </div>
+        </div>
         }
 
         @if(!accountService.signal_CurrentUser()) {
-          <form #loginForm="ngForm" (ngSubmit)="login()" class="d-flex flex-column flex-md-row" autocomplete="off">
-            <input name="username" [(ngModel)]="model.userName" class="form-control me-2 mb-2 mb-md-0" placeholder="Username" />
-            <input name="password" [(ngModel)]="model.password"  class="form-control me-2 mb-2 mb-md-0" type="password" placeholder="Password" />
-            <button class="btn btn-outline-success mb-1 mb-md-0" type="submit">Login</button>
-          </form>
+        <form #loginForm="ngForm" (ngSubmit)="login()" class="d-flex flex-column flex-md-row" autocomplete="off">
+          <input name="username" [(ngModel)]="model.userName" class="form-control me-2 mb-2 mb-md-0" placeholder="Username" />
+          <input name="password" [(ngModel)]="model.password" class="form-control me-2 mb-2 mb-md-0" type="password" placeholder="Password" />
+          <button class="btn btn-success mb-1 mb-md-0" type="submit">Login</button>
+        </form>
         }
       </div>
     </div>
